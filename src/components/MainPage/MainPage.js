@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import autoBind from 'react-autobind';
 import i18next from 'i18next';
+import { Link } from 'react-router';
 
 import { setLanguage } from 'ducks/common';
 
