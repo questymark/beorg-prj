@@ -1,5 +1,6 @@
 import axios from 'axios';
 import startsWith from 'lodash/startsWith';
+import Notifications from 'react-notification-system-redux';
 import mockApi from 'mock/mockApi';
 
 import { setTokens, getTokens } from './utils';
@@ -56,15 +57,13 @@ export default function apiRequest(method, operation, types, dispatch, formData)
                 error: response.data.errorCode
             });
 
-            // FIXME: create error notification
-            console.log(response.data.errorCode);
+            dispatch(Notifications.error({ message: response.data.errorCode, position: 'bl' }));
         }
 
     })
     .catch(error => {
         dispatch({type: EVENT_FAILED, error});
 
-        // FIXME: create error notification
-        console.log(error.message);
+        dispatch(Notifications.error({ message: error.message, position: 'bl' }));
     })
 }

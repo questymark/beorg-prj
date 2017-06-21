@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import autoBind from 'react-autobind';
 import { Link } from 'react-router';
+import Notifications from 'react-notification-system-redux';
 
 const getState = state => ({
 
 });
 
 const getActions = dispatch => bindActionCreators({
-    setLocale: IntlActions.setLocale
+    setLocale: IntlActions.setLocale,
+    notify: Notifications.show
 }, dispatch);
 
 class MainPage extends Component {
@@ -23,6 +25,10 @@ class MainPage extends Component {
       this.props.setLocale(language);
   }
 
+  notify() {
+      this.props.notify({message: 'test error message', position: 'bl'}, 'error');
+  }
+
   render() {
       const { translate } = this.props;
 
@@ -31,6 +37,7 @@ class MainPage extends Component {
           <h1>{translate('hello_world')}</h1>
           <Link to="/signin">signin</Link>
           <div>
+              <button onClick={this.notify}>notify</button>
               <button onClick={this.setLanguage.bind(this, 'en')}>English</button>
               <button onClick={this.setLanguage.bind(this, 'ru')}>Русский</button>
           </div>

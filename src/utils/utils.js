@@ -1,5 +1,3 @@
-import i18next from 'i18next';
-
 export function setTokens(body) {
     localStorage.setItem('tokens', JSON.stringify({
         accessToken: body.access_token,
@@ -9,4 +7,12 @@ export function setTokens(body) {
 
 export function getTokens() {
     return JSON.parse(localStorage.getItem('tokens'));
+};
+
+export function setLocaleInLocalStorage(local) {
+    localStorage.setItem('locale', local);
+};
+
+export function getLocaleFromLocalStorage() {
+    return localStorage.getItem('locale')
 };

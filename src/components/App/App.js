@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import { browserHistory } from 'react-router';
+import Notifications from 'react-notification-system-redux';
 
 const getState = state => ({
     signInLoading: state.auth.signInLoading,
     signInLoaded: state.auth.signInLoaded,
+
+    notifications: state.notifications
 });
 
 const getActions = dispatch => (
     bindActionCreators({
-        setLocale: IntlActions.setLocale,
+
     }, dispatch)
 );
 
@@ -31,9 +33,13 @@ class App extends Component {
     return (
       <div>
           {this.props.children}
+
+          <Notifications
+              notifications={this.props.notifications}
+          />
       </div>
     );
   }
 }
 
-export default connect(getState, getActions)(withTranslate(App));
+export default connect(getState, getActions)(App);

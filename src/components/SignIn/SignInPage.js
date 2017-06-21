@@ -7,6 +7,7 @@ import autoBind from 'react-autobind';
 
 import SignInForm from './SignInForm';
 // import SignUpForm from './SignUpForm';
+import { setLocaleInLocalStorage } from 'utils/utils';
 
 import { welcome } from 'components/images';
 import './SignInPage.css';
@@ -39,6 +40,7 @@ class SignInPage extends Component {
 
     setLanguage(language) {
         this.props.setLocale(language);
+        setLocaleInLocalStorage(language);
     }
 
     render() {
