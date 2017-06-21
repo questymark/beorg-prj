@@ -10,12 +10,3 @@ export function setTokens(body) {
 export function getTokens() {
     return JSON.parse(localStorage.getItem('tokens'));
 };
-
-export function i18nInit(language, self) {
-    i18next.init({
-        lng: language,
-        resources: require(`i18n/${language}.json`)
-    }, (err, t) => {
-        self.forceUpdate();
-    });
-};

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import { browserHistory } from 'react-router';
-
-import { setLanguage } from 'ducks/common';
 
 const getState = state => ({
     signInLoading: state.auth.signInLoading,
@@ -12,17 +11,13 @@ const getState = state => ({
 
 const getActions = dispatch => (
     bindActionCreators({
-        setLanguage
+        setLocale: IntlActions.setLocale,
     }, dispatch)
 );
 
 class App extends Component {
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
-    this.props.setLanguage('ru', this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,4 +36,4 @@ class App extends Component {
   }
 }
 
-export default connect(getState, getActions)(App);
+export default connect(getState, getActions)(withTranslate(App));

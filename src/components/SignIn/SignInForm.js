@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import yup from 'yup';
+import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import { Field } from 'react-formal';
-import { Button } from 'semantic-ui-react'
-import i18next from 'i18next';
 
-import { FormConstructor, InputWrapper } from 'components/Common/Forms';
-import { SignInModel } from 'components/models';
+import { FormConstructor, InputWrapper, SubmitButton } from 'components/Common/Forms';
+import SignInModel from 'models/SignInModel';
 import { signIn } from 'ducks/auth';
 
 const getState = state => ({
@@ -17,6 +15,7 @@ const getState = state => ({
 
 const getActions = dispatch => (
     bindActionCreators({
+        setLocale: IntlActions.setLocale,
         signIn
     }, dispatch)
 );
@@ -25,7 +24,7 @@ class SignInForm extends FormConstructor {
     constructor(props) {
         super(props);
 
-        this.schema = SignInModel;
+        this.schema = SignInModel(props.translate);
 
         this.state = {
             form: this.schema.default(),
@@ -35,16 +34,15 @@ class SignInForm extends FormConstructor {
     }
 
     handleSubmit(formData) {
-        console.log('submitting values:', formData);
         this.props.signIn(formData);
     }
 
     render() {
-        const { signInLoading } = this.props;
+        const { signInLoading, translate } = this.props;
 
-        const username = i18next.t('form.username');
-        const password = i18next.t('form.password');
-        const signIn = i18next.t('form.signIn');
+        const username = translate('form.username');
+        const password = translate('form.password');
+        const signIn = translate('form.signIn');
 
         return this.renderForm(
             <div className='signin-form'>
@@ -56,19 +54,13 @@ class SignInForm extends FormConstructor {
                     <Field name='password' type='password' placeholder={password} />
                 </InputWrapper>
 
-                <Button
-                    fluid
-                    primary
-                    type='submit'
-                    loading={signInLoading}
-                    disabled={signInLoading}
-                >
+                <SubmitButton loading={signInLoading}>
                     {signIn}
-                </Button>
+                </SubmitButton>
 
             </div>
         );
     }
 }
 
-export default connect(getState, getActions)(SignInForm)
+export default connect(getState, getActions)(withTranslate(SignInForm));

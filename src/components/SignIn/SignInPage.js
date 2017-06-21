@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import { Menu, Segment, Flag } from 'semantic-ui-react'
 import autoBind from 'react-autobind';
 
 import SignInForm from './SignInForm';
 // import SignUpForm from './SignUpForm';
-import { setLanguage } from 'ducks/common';
 
 import { welcome } from 'components/images';
 import './SignInPage.css';
 
 const getState = state => ({
-    language: state.common.language
+
 });
 
 const getActions = dispatch => (
     bindActionCreators({
-        setLanguage
+        setLocale: IntlActions.setLocale
     }, dispatch)
 );
 
@@ -38,7 +38,7 @@ class SignInPage extends Component {
     }
 
     setLanguage(language) {
-        this.props.setLanguage(language, this);
+        this.props.setLocale(language);
     }
 
     render() {
@@ -83,4 +83,4 @@ class SignInPage extends Component {
     }
 }
 
-export default connect(getState, getActions)(SignInPage);
+export default connect(getState, getActions)(withTranslate(SignInPage));
