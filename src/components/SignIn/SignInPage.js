@@ -6,7 +6,6 @@ import { Menu, Segment, Flag } from 'semantic-ui-react'
 import autoBind from 'react-autobind';
 
 import SignInForm from './SignInForm';
-// import SignUpForm from './SignUpForm';
 import { setLocaleInLocalStorage } from 'utils/utils';
 
 import { welcome } from 'components/images';
