@@ -1,12 +1,16 @@
 import yup from 'yup';
 
 export default function SignInModel(translate) {
-    const loginEmpty = translate('form.validate.loginEmpty');
-    const loginMax = translate('form.validate.loginMax');
-    const requirementsForLogin = translate('form.validate.requirementsForLogin');
+
+    const login = translate('form.login');
+    const password = translate('form.password');
+
+    const loginEmpty = translate('form.validate.consistsOnlySpaces', { name: login });
+    const loginMax = translate('form.validate.longDeslension', { name: login });
+    const requirementsForLogin = translate('form.validate.startLetterDeclension', { name: login });
     const required = translate('form.validate.required');
-    const passwordMin6 = translate('form.validate.passwordMin6');
-    const passwordEmpty = translate('form.validate.passwordEmpty');
+    const passwordMin6 = translate('form.validate.min', { name: password, q: 6 });
+    const passwordEmpty = translate('form.validate.consistsOnlySpaces', { name: password });
 
     return yup.object().shape({
         username: yup.string()

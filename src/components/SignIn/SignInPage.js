@@ -6,7 +6,7 @@ import { Menu, Segment, Flag } from 'semantic-ui-react'
 import autoBind from 'react-autobind';
 
 import SignInForm from './SignInForm';
-// import SignUpForm from './SignUpForm';
+import SignUpForm from './SignUpForm';
 import { setLocaleInLocalStorage } from 'utils/utils';
 
 import { welcome } from 'components/images';
@@ -45,28 +45,32 @@ class SignInPage extends Component {
 
     render() {
         const { activeItem } = this.state;
+        const { translate } = this.props;
+
+        const signIn = translate('forms.signIn');
+        const signUp = translate('forms.signUp');
 
         return (
             <div className="sign">
                 <div className="sign__logo">
                     <img src={welcome} alt="beorg"/>
                 </div>
-                {/*<Menu pointing secondary widths='2'>*/}
-                    {/*<Menu.Item*/}
-                        {/*name='Вход'*/}
-                        {/*active={activeItem === 'signin'}*/}
-                        {/*onClick={this.handleItemClick.bind(this, 'signin')}*/}
-                    {/*/>*/}
-                    {/*<Menu.Item*/}
-                        {/*name='Регистрация'*/}
-                        {/*active={activeItem === 'signup'}*/}
-                        {/*onClick={this.handleItemClick.bind(this, 'signup')}*/}
-                    {/*/>*/}
-                {/*</Menu>*/}
+                <Menu pointing secondary widths='2'>
+                    <Menu.Item
+                        name={signIn}
+                        active={activeItem === 'signin'}
+                        onClick={this.handleItemClick.bind(this, 'signin')}
+                    />
+                    <Menu.Item
+                        name={signUp}
+                        active={activeItem === 'signup'}
+                        onClick={this.handleItemClick.bind(this, 'signup')}
+                    />
+                </Menu>
 
                 <Segment>
                     {activeItem === 'signin' && <SignInForm />}
-                    {/*{activeItem === 'signup' && <SignUpForm />}*/}
+                    {activeItem === 'signup' && <SignUpForm />}
                 </Segment>
                 <div className="sign__languages">
                     <Flag

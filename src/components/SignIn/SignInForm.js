@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { withTranslate, IntlActions } from 'react-redux-multilingual'
+import { withTranslate } from 'react-redux-multilingual'
 import { Field } from 'react-formal';
 
 import { FormConstructor, InputWrapper, SubmitButton } from 'components/Common/Forms';
@@ -15,7 +15,6 @@ const getState = state => ({
 
 const getActions = dispatch => (
     bindActionCreators({
-        setLocale: IntlActions.setLocale,
         signIn
     }, dispatch)
 );
@@ -40,14 +39,14 @@ class SignInForm extends FormConstructor {
     render() {
         const { signInLoading, translate } = this.props;
 
-        const username = translate('form.username');
+        const login = translate('form.login');
         const password = translate('form.password');
         const signIn = translate('form.signIn');
 
         return this.renderForm(
             <div className='signin-form'>
-                <InputWrapper label={username} error={this.state.errors.username}>
-                    <Field name='username' placeholder={username} />
+                <InputWrapper label={login} error={this.state.errors.username}>
+                    <Field name='username' placeholder={login} />
                 </InputWrapper>
 
                 <InputWrapper label={password}  error={this.state.errors.password}>
