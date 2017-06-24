@@ -1,0 +1,20 @@
+.main-layout__header {
+  background: #ffffff !important;
+}
+
+.main-layout__logo {
+  height: 40px;
+}
+
+.main-layout__logo img {
+  width: 65px !important;
+  height: 100%;
+}
+
+.main-layout__main {
+  padding-top: 60px !important;
+}
+
+.main-layout__children {
+
+}

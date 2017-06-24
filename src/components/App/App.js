@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import Notifications from 'react-notification-system-redux';
+import moment from 'moment';
+
+moment.locale('ru');
 
 const getState = state => ({
     signInLoading: state.auth.signInLoading,
