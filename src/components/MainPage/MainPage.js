@@ -6,19 +6,26 @@ import autoBind from 'react-autobind';
 import { Link } from 'react-router';
 import Notifications from 'react-notification-system-redux';
 
+import { some } from 'ducks/auth';
+
 const getState = state => ({
 
 });
 
 const getActions = dispatch => bindActionCreators({
     setLocale: IntlActions.setLocale,
-    notify: Notifications.show
+    notify: Notifications.show,
+    some
 }, dispatch);
 
 class MainPage extends Component {
   constructor(props) {
     super(props);
     autoBind(this);
+  }
+
+  componentWillMount() {
+      this.props.some();
   }
 
   setLanguage(language) {
