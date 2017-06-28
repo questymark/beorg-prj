@@ -25,3 +25,7 @@ export function setLocaleInLocalStorage(local) {
 export function getLocaleFromLocalStorage() {
     return localStorage.getItem('locale')
 };
+
+export function removeTokens() {
+    localStorage.removeItem('tokens');
+};

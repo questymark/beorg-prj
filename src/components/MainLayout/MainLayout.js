@@ -3,11 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import autoBind from 'react-autobind';
+import { browserHistory } from 'react-router';
 import { Grid, Button, Dropdown, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router';
 import moment from 'moment';
 
-import { setLocaleInLocalStorage } from 'utils/utils';
+import { setLocaleInLocalStorage, removeTokens } from 'utils/utils';
 
 import { welcome } from 'components/images';
 import './MainLayout.css';
@@ -29,6 +30,11 @@ class MainLayout extends Component {
   setLanguage(language) {
       this.props.setLocale(language);
       setLocaleInLocalStorage(language);
+  }
+
+  logOut() {
+      removeTokens();
+      browserHistory.push('/signin');
   }
 
   renderHeader() {
@@ -56,7 +62,7 @@ class MainLayout extends Component {
                   </Dropdown>
 
                   <Menu.Item>
-                      <Button primary>{logOut}</Button>
+                      <Button primary onClick={this.logOut}>{logOut}</Button>
                   </Menu.Item>
               </Menu.Menu>
           </Menu>
