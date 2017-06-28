@@ -1,8 +1,10 @@
 import axios from 'axios';
 import startsWith from 'lodash/startsWith';
-import mockApi from 'mock/mockApi';
+import Notifications from 'react-notification-system-redux';
+import { browserHistory } from 'react-router';
 
-import { setTokens, getTokens } from './utils';
+import mockApi from 'mock/mockApi';
+import { setTokens, getTokens, setRefreshToken } from './utils';
 
 mockApi(axios);
 
@@ -23,7 +25,7 @@ export default function apiRequest(method, operation, types, dispatch, formData)
     dispatch({ type: EVENT_STARTED, params: formData });
 
     const url = formatUrl(operation);
-    const authHeader = EVENT_STARTED !== 'SIGN_IN' ?
+    const authHeader = EVENT_STARTED !== 'SIGN_IN' && getTokens() ?
         {headers: { 'Authorization': `Bearer ${getTokens().accessToken}` }} : '';
 
     axios({
@@ -56,15 +58,45 @@ export default function apiRequest(method, operation, types, dispatch, formData)
                 error: response.data.errorCode
             });
 
-            // FIXME: create error notification
-            console.log(response.data.errorCode);
+            dispatch(Notifications.error({ message: response.data.errorCode, position: 'bl' }));
         }
 
     })
     .catch(error => {
+        const tokens = getTokens();
+        const authToken = error.config.headers.Authorization;
+        const status = error.response.status;
+
         dispatch({type: EVENT_FAILED, error});
 
-        // FIXME: create error notification
-        console.log(error.message);
+        dispatch(Notifications.error({ message: error.message, position: 'bl' }));
+
+        if (status === 401) {
+
+            // проверяем на наличие токена в заголовке и в localStorage
+            if (authToken && tokens) {
+
+                // проверяем, равен ли текущий токен refresh токену
+                if (authToken !== `Bearer ${tokens.refreshToken}`) {
+                    console.log('refresh token');
+
+                    // обновляем токен
+                    setRefreshToken();
+
+                    // вызываем рекурсивно apiRequest
+                    apiRequest(method, operation, types, dispatch, formData);
+                } else {
+
+                    // сюда попадаем, если уже стоит refreshToken и ошибка 401
+                    browserHistory.push('/signin');
+                }
+
+                return;
+            }
+
+            // если в заголовке нет токена, редиректим на /signin
+            browserHistory.push('/signin');
+
+        }
     })
 }

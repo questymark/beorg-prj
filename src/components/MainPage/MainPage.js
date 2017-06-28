@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import autoBind from 'react-autobind';
-import i18next from 'i18next';
+import { Link } from 'react-router';
+import Notifications from 'react-notification-system-redux';
 
-import { setLanguage } from 'ducks/common';
+import { some } from 'ducks/auth';
 
 const getState = state => ({
-    language: state.common.language
+
 });
 
 const getActions = dispatch => bindActionCreators({
-    setLanguage
+    setLocale: IntlActions.setLocale,
+    notify: Notifications.show,
+    some
 }, dispatch);
 
 class MainPage extends Component {
@@ -20,18 +24,27 @@ class MainPage extends Component {
     autoBind(this);
   }
 
+  componentWillMount() {
+      this.props.some();
+  }
+
   setLanguage(language) {
-    this.props.setLanguage(language, this);
+      this.props.setLocale(language);
+  }
+
+  notify() {
+      this.props.notify({message: 'test error message', position: 'bl'}, 'error');
   }
 
   render() {
-      const { language } = this.props;
+      const { translate } = this.props;
 
       return (
       <div>
-          <div>{language}</div>
-          <h1>{i18next.t('hello_world')}</h1>
+          <h1>{translate('hello_world')}</h1>
+          <Link to="/signin">signin</Link>
           <div>
+              <button onClick={this.notify}>notify</button>
               <button onClick={this.setLanguage.bind(this, 'en')}>English</button>
               <button onClick={this.setLanguage.bind(this, 'ru')}>Русский</button>
           </div>
@@ -40,4 +53,4 @@ class MainPage extends Component {
   }
 }
 
-export default connect(getState, getActions)(MainPage);
+export default connect(getState, getActions)(withTranslate(MainPage));
