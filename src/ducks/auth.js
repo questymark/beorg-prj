@@ -8,6 +8,10 @@ const SIGN_UP = 'SIGN_UP';
 const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
+const SOME = 'SOME';
+const SOME_SUCCESS = 'SOME_SUCCESS';
+const SOME_FAILURE = 'SOME_FAILURE';
+
 export function signIn(data) {
     const url = `/uaa/oauth/token?grant_type=password&username=${data.username}&password=${data.password}`;
 
@@ -23,6 +27,12 @@ export function signUp(data) {
     return dispatch => apiRequest('post', url,
         [SIGN_UP, SIGN_UP_SUCCESS, SIGN_UP_FAILURE], dispatch,
         data
+    );
+}
+
+export function some() {
+    return dispatch => apiRequest('post', '/some',
+        [SOME, SOME_SUCCESS, SOME_FAILURE], dispatch
     );
 }
 
