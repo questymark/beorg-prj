@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 
 export default function mockApi(axios) {
-    const mock = new MockAdapter(axios, { delayResponse: 2000 });
+    const mock = new MockAdapter(axios, { delayResponse: 1000 });
 
     mock.onPost('http://localhost:8080/uaa/oauth/token?grant_type=password&username=user&password=password').reply(200, {
         access_token: '18eb67b0-0e94-4908-a22d-e7f1300fa3f2',
@@ -28,6 +28,12 @@ export default function mockApi(axios) {
     });
 
     mock.onPost('http://localhost:8080/registration').reply(200, {
+        success: false,
+        errorCode: 123,
+        body: {}
+    });
+
+    mock.onPost('http://localhost:8080/some').reply(401, {
         success: false,
         errorCode: 123,
         body: {}
