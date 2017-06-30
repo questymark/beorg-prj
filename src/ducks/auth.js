@@ -8,6 +8,10 @@ const SIGN_UP = 'SIGN_UP';
 const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
+const REFRESH_TOKEN = 'REFRESH_TOKEN';
+const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
+const REFRESH_TOKEN_FAILURE = 'REFRESH_TOKEN_FAILURE';
+
 const SOME = 'SOME';
 const SOME_SUCCESS = 'SOME_SUCCESS';
 const SOME_FAILURE = 'SOME_FAILURE';
@@ -27,6 +31,14 @@ export function signUp(data) {
     return dispatch => apiRequest('post', url,
         [SIGN_UP, SIGN_UP_SUCCESS, SIGN_UP_FAILURE], dispatch,
         data
+    );
+}
+
+export function refreshToken(refreshToken) {
+    const url = `/refresh_token=${refreshToken}`;
+
+    return dispatch => apiRequest('post', url,
+        [REFRESH_TOKEN, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILURE], dispatch
     );
 }
 
@@ -86,6 +98,27 @@ export default function (state = initialState, action) {
                 ...state,
                 signUpLoading: false,
                 signUpLoaded: false,
+            }
+
+        case REFRESH_TOKEN:
+            return {
+                ...state,
+                refreshTokenLoading: true,
+                refreshTokenLoaded: false,
+            }
+
+        case REFRESH_TOKEN_SUCCESS:
+            return {
+                ...state,
+                refreshTokenLoading: false,
+                refreshTokenLoaded: true,
+            }
+
+        case REFRESH_TOKEN_FAILURE:
+            return {
+                ...state,
+                refreshTokenLoading: false,
+                refreshTokenLoaded: false,
             }
 
         default:

@@ -7,6 +7,7 @@ import {reducer as notifications} from 'react-notification-system-redux';
 import { getLocaleFromLocalStorage } from 'utils/utils';
 
 import auth from './auth';
+import common from './common';
 
 const logger = createLogger({
     collapsed: true,
@@ -19,7 +20,8 @@ export default function (initialState = { Intl: { locale } }) {
   const rootReducer = combineReducers({
       Intl,
       notifications,
-      auth
+      auth,
+      common
   });
 
   return createStore(rootReducer, initialState,

@@ -11,6 +11,8 @@ const getState = state => ({
     signInLoading: state.auth.signInLoading,
     signInLoaded: state.auth.signInLoaded,
 
+    currRoute: state.common.currRoute,
+
     notifications: state.notifications
 });
 
@@ -26,9 +28,10 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { currRoute } = this.props;
+
     if (this.props.signInLoading && nextProps.signInLoaded) {
-      console.log('success sign in, redirect to /');
-      browserHistory.push('/');
+      browserHistory.push(currRoute);
     }
   }
 
