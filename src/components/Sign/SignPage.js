@@ -4,13 +4,12 @@ import { bindActionCreators } from 'redux';
 import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import { Menu, Segment, Flag } from 'semantic-ui-react'
 import autoBind from 'react-autobind';
+import { browserHistory } from 'react-router';
 
-import SignInForm from './SignInForm';
-import SignUpForm from './SignUpForm';
 import { setLocaleInLocalStorage } from 'utils/utils';
 
 import { welcome } from 'components/images';
-import './SignInPage.css';
+import './SignPage.css';
 
 const getState = state => ({
 
@@ -27,15 +26,19 @@ class SignInPage extends Component {
         super(props);
         autoBind(this);
 
+        const form = props.location.pathname.slice(1);
+
         this.state = {
-            activeItem: 'signin'
+            activeItem: form
         }
     }
 
     handleItemClick(item) {
         this.setState({
             activeItem: item
-        })
+        });
+
+        browserHistory.push(`/${item}`)
     }
 
     setLanguage(language) {
@@ -69,8 +72,7 @@ class SignInPage extends Component {
                 </Menu>
 
                 <Segment>
-                    {activeItem === 'signin' && <SignInForm />}
-                    {activeItem === 'signup' && <SignUpForm />}
+                    {this.props.children}
                 </Segment>
                 <div className="sign__languages">
                     <Flag
