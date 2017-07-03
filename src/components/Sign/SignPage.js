@@ -4,12 +4,12 @@ import { bindActionCreators } from 'redux';
 import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import { Menu, Segment, Flag } from 'semantic-ui-react'
 import autoBind from 'react-autobind';
+import { browserHistory } from 'react-router';
 
-import SignInForm from './SignInForm';
 import { setLocaleInLocalStorage } from 'utils/utils';
 
 import { welcome } from 'components/images';
-import './SignInPage.css';
+import './SignPage.css';
 
 const getState = state => ({
 
@@ -26,15 +26,19 @@ class SignInPage extends Component {
         super(props);
         autoBind(this);
 
+        const form = props.location.pathname.slice(1);
+
         this.state = {
-            activeItem: 'signin'
+            activeItem: form
         }
     }
 
     handleItemClick(item) {
         this.setState({
             activeItem: item
-        })
+        });
+
+        browserHistory.push(`/${item}`)
     }
 
     setLanguage(language) {
@@ -44,28 +48,31 @@ class SignInPage extends Component {
 
     render() {
         const { activeItem } = this.state;
+        const { translate } = this.props;
+
+        const signIn = translate('forms.signIn');
+        const signUp = translate('forms.signUp');
 
         return (
             <div className="sign">
                 <div className="sign__logo">
                     <img src={welcome} alt="beorg"/>
                 </div>
-                {/*<Menu pointing secondary widths='2'>*/}
-                    {/*<Menu.Item*/}
-                        {/*name='Вход'*/}
-                        {/*active={activeItem === 'signin'}*/}
-                        {/*onClick={this.handleItemClick.bind(this, 'signin')}*/}
-                    {/*/>*/}
-                    {/*<Menu.Item*/}
-                        {/*name='Регистрация'*/}
-                        {/*active={activeItem === 'signup'}*/}
-                        {/*onClick={this.handleItemClick.bind(this, 'signup')}*/}
-                    {/*/>*/}
-                {/*</Menu>*/}
+                <Menu pointing secondary widths='2'>
+                    <Menu.Item
+                        name={signIn}
+                        active={activeItem === 'signin'}
+                        onClick={this.handleItemClick.bind(this, 'signin')}
+                    />
+                    <Menu.Item
+                        name={signUp}
+                        active={activeItem === 'signup'}
+                        onClick={this.handleItemClick.bind(this, 'signup')}
+                    />
+                </Menu>
 
                 <Segment>
-                    {activeItem === 'signin' && <SignInForm />}
-                    {/*{activeItem === 'signup' && <SignUpForm />}*/}
+                    {this.props.children}
                 </Segment>
                 <div className="sign__languages">
                     <Flag

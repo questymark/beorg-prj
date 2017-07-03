@@ -1,18 +1,32 @@
 export default {
-    locale: 'en',
+    locale: 'ru',
     messages: {
         hello_world: 'Привет, мир!',
+        forms: {
+            signIn: 'Вход',
+            signUp: 'Регистрация'
+        },
         form: {
-            username: 'Логин',
+            login: 'Логин',
+            name: 'Имя',
+            email: 'Email',
             password: 'Пароль',
+            passwords: 'Пароли',
+            passwordRepeat: 'Пароль еще раз',
             signIn: 'Войти',
+            signUp: 'Зарегистрироваться',
             validate: {
-                loginEmpty: 'Логин состоит из одних пробелов',
-                loginMax: 'Слишком длинный логин',
-                requirementsForLogin: 'Логин должен начинаться с буквы и может содержать буквы, цифры и тире',
+                consistsOnlySpaces: '{name} состоит из одних пробелов',
+                long: 'Слишком длинное {name}',
+                longDeslension: 'Слишком длинный {name}',
+                incorrect: 'Некорректное {name}',
+                incorrectDeclension: 'Некорректный {name}',
+                startLetter: '{name} должно начинаться с буквы и может содержать буквы, цифры и тире',
+                startLetterDeclension: '{name} должен начинаться с буквы и может содержать буквы, цифры и тире',
                 required: 'Поле обязательно для заполнения',
-                passwordMin6: 'Пароль должен быть не менее 6 символов',
-                passwordEmpty: 'Пароль состоит из одних пробелов'
+                min: '{name} должен быть не менее {q} символов',
+                dontMatch: '{names} не совпадают',
+                retype: 'Введите {name} еще раз'
             }
         }
     }
