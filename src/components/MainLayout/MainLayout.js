@@ -3,28 +3,47 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslate, IntlActions } from 'react-redux-multilingual'
 import autoBind from 'react-autobind';
-import { browserHistory } from 'react-router';
-import { Grid, Button, Dropdown, Menu } from 'semantic-ui-react';
-import { Link } from 'react-router';
+import { Grid, Button, Dropdown, Menu, Dimmer, Loader, Segment } from 'semantic-ui-react';
+import { Link, browserHistory } from 'react-router';
 import moment from 'moment';
 
-import { setLocaleInLocalStorage, removeTokens } from 'utils/utils';
+import { refreshToken } from 'ducks/auth';
+import { setCurrentRoute } from 'ducks/common';
+import { setLocaleInLocalStorage, removeTokens, getTokens } from 'utils/utils';
 
 import { welcome } from 'components/images';
 import './MainLayout.css';
 
-const getState = state => ({
-
+const getState = (state, props) => ({
+    currRoute: props.location.pathname,
+    refreshTokenLoading: state.auth.refreshTokenLoading
 });
 
 const getActions = dispatch => bindActionCreators({
     setLocale: IntlActions.setLocale,
+    refreshToken,
+    setCurrentRoute
 }, dispatch);
 
 class MainLayout extends Component {
   constructor(props) {
     super(props);
     autoBind(this);
+  }
+
+  componentWillMount() {
+      const { currRoute } = this.props;
+      this.props.setCurrentRoute(currRoute);
+
+      const tokens = getTokens();
+
+      if (!tokens) {
+          browserHistory.push('/signin');
+
+          return;
+      }
+
+      this.props.refreshToken(tokens.refreshToken);
   }
 
   setLanguage(language) {
@@ -114,16 +133,28 @@ class MainLayout extends Component {
       )
   }
 
-  render() {
+  renderLoading() {
       return (
-      <div className='main-layout'>
-          {this.renderHeader()}
+          <Dimmer active>
+              <Loader size='massive' />
+          </Dimmer>
+      )
+  }
 
-          {this.renderMain()}
+  render() {
+      const { refreshTokenLoading } = this.props;
 
-          {this.renderFooter()}
-      </div>
-    );
+      if (refreshTokenLoading) return this.renderLoading();
+
+      return (
+          <div className='main-layout'>
+              {this.renderHeader()}
+
+              {this.renderMain()}
+
+              {this.renderFooter()}
+          </div>
+      );
   }
 }
 
