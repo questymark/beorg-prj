@@ -19,7 +19,7 @@ export default function mockApi(axios) {
         scope: 'ui'
     });
 
-    mock.onPost('http://localhost:8080/uaa/oauth/token?grant_type=refresh_token&refresh_token=ffc94eae-67d0-416c-8c85-764cc42d8c69').reply(200, {
+    mock.onPost('http://localhost:8080/refresh_token=ffc94eae-67d0-416c-8c85-764cc42d8c69').reply(200, {
         access_token: '18eb67b0-0e94-4908-a22d-e7f1300fa3f2',
         token_type: 'bearer',
         refresh_token: 'ffc94eae-67d0-416c-8c85-764cc42d8c69',
