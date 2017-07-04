@@ -2,6 +2,17 @@ export default {
     locale: 'en',
     messages: {
         hello_world: 'Hello world',
+        header: {
+            hello: 'Hello',
+            language: 'Language',
+            logOut: 'Log out'
+        },
+        menu: {
+            projects: 'Projects',
+            payment: 'Payment',
+            exportItem: 'Export',
+            uploading: 'Uploading'
+        },
         forms: {
             signIn: 'Sign in',
             signUp: 'Sign up'

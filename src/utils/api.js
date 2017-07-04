@@ -35,8 +35,7 @@ export default function apiRequest(method, operation, types, dispatch, formData)
         ...authHeader
     })
     .then(response => {
-        console.log(response);
-        if (EVENT_STARTED === 'SIGN_IN') {
+        if (EVENT_STARTED === 'SIGN_IN' || EVENT_STARTED === 'REFRESH_TOKEN') {
             setTokens(response.data);
 
             dispatch({
@@ -72,6 +71,12 @@ export default function apiRequest(method, operation, types, dispatch, formData)
         dispatch(Notifications.error({ message: error.message, position: 'bl' }));
 
         if (status === 401) {
+
+            // если метод refreshToken вернул 401, редирект на /signin
+            if (EVENT_STARTED === 'REFRESH_TOKEN') {
+                browserHistory.push('/signin');
+                return;
+            }
 
             // проверяем на наличие токена в заголовке и в localStorage
             if (authToken && tokens) {

@@ -2,6 +2,17 @@ export default {
     locale: 'ru',
     messages: {
         hello_world: 'Привет, мир!',
+        header: {
+            hello: 'Здравствуйте',
+            language: 'Язык',
+            logOut: 'Выход'
+        },
+        menu: {
+            projects: 'Проекты',
+            payment: 'Оплата',
+            exportItem: 'Экспорт',
+            uploading: 'Выгрузка'
+        },
         forms: {
             signIn: 'Вход',
             signUp: 'Регистрация'
