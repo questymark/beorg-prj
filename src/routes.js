@@ -3,11 +3,11 @@ import { Route, IndexRoute }  from 'react-router';
 
 import App from 'components/App';
 import MainLayout from 'components/MainLayout';
+import MainPage from 'components/MainPage/MainPage';
 import ProjectsPage from 'components/Projects/ProjectsPage';
 import PaymentPage from 'components/Payment/PaymentPage';
 import ExportPage from 'components/Export/ExportPage';
 import UploadingPage from 'components/Uploading/UploadingPage';
-import MainPage from 'components/MainPage';
 import SignPage from 'components/Sign'
 import SignInForm from 'components/Sign/SignInForm';
 import SignUpForm from 'components/Sign/SignUpForm';
