@@ -9,7 +9,7 @@ import moment from 'moment';
 
 import { refreshToken } from 'ducks/auth';
 import { setCurrentRoute } from 'ducks/common';
-import { setLocaleInLocalStorage, getTokens } from 'utils/utils';
+import { setLocaleInLocalStorage, removeTokens, getTokens } from 'utils/utils';
 
 import { welcome } from 'components/images';
 import './MainLayout.css';
@@ -51,6 +51,11 @@ class MainLayout extends Component {
       setLocaleInLocalStorage(language);
   }
 
+  logOut() {
+      removeTokens();
+      browserHistory.push('/signin');
+  }
+
   renderHeader() {
       const { translate } = this.props;
 
@@ -76,7 +81,7 @@ class MainLayout extends Component {
                   </Dropdown>
 
                   <Menu.Item>
-                      <Button primary>{logOut}</Button>
+                      <Button primary onClick={this.logOut}>{logOut}</Button>
                   </Menu.Item>
               </Menu.Menu>
           </Menu>
